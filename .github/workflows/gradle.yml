@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Gradle Build
-        run: ./gradlew build
       - name: Lint
         run: ./gradlew ktlintCheck
+      - name: Gradle Build
+        run: ./gradlew build
