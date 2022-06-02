@@ -28,15 +28,15 @@ class ShowServiceTest : StringSpec() {
 
     init {
 
-         "should be able to add the first show" {
-             val referenceDate = ZonedDateTime.of(2021, 5, 21, 11, 15, 0, 0, ZoneId.systemDefault())
-             val showRequest = getDummyShowRequest(referenceDate)
-             val expected = getDummyShow(1, referenceDate)
-             every { mockShowRepository.save(showRequest) } returns expected
-             every { mockShowRepository.findAll() } returns listOf()
-             val actual = ShowService(mockShowRepository, mockMovieService).save(showRequest)
-             actual shouldBe expected
-         }
+        "should be able to add the first show" {
+            val referenceDate = ZonedDateTime.of(2021, 5, 21, 11, 15, 0, 0, ZoneId.systemDefault())
+            val showRequest = getDummyShowRequest(referenceDate)
+            val expected = getDummyShow(1, referenceDate)
+            every { mockShowRepository.save(showRequest) } returns expected
+            every { mockShowRepository.findAll() } returns listOf()
+            val actual = ShowService(mockShowRepository, mockMovieService).save(showRequest)
+            actual shouldBe expected
+        }
 
         "Given the theatre has no shows an empty list should be returned" {
             every { mockShowRepository.findAll() } returns listOf<Show>()
@@ -50,7 +50,7 @@ class ShowServiceTest : StringSpec() {
             val expected = getDummyShow(1, referenceDate)
 
             val referenceDateTwo = ZonedDateTime.of(2021, 5, 21, 3, 15, 0, 0, ZoneId.systemDefault())
-            val expectedTwo = getDummyShow(2 ,referenceDateTwo)
+            val expectedTwo = getDummyShow(2, referenceDateTwo)
 
             // returns list in increasing orders
             every { mockShowRepository.findAll() } returns listOf(expected, expectedTwo)
@@ -59,31 +59,27 @@ class ShowServiceTest : StringSpec() {
             println(actual)
 
             actual shouldBeSortedWith (compareByDescending { it.startTime })
-
         }
 
         "Adding an show overlapping with an existing show should throw an error" {
             val referenceDate = ZonedDateTime.of(2021, 5, 21, 1, 15, 0, 0, ZoneId.systemDefault())
-            val existingShow= getDummyShow(1, referenceDate)
+            val existingShow = getDummyShow(1, referenceDate)
 
             val referenceDateTwo = ZonedDateTime.of(2021, 5, 21, 1, 30, 0, 0, ZoneId.systemDefault())
             val newShow = getDummyShowRequest(referenceDateTwo)
 
-
             every { mockShowRepository.findAll() } returns listOf(existingShow)
-            every { mockMovieService.findMovieById(1) } returns Movie(1,"test", 30, "English", 100.00)
+            every { mockMovieService.findMovieById(1) } returns Movie(1, "test", 30, "English", 100.00)
             every { mockShowRepository.save(newShow) } returns getDummyShow(1, referenceDate)
 
             shouldThrow<UnsupportedOperationException> {
                 ShowService(mockShowRepository, mockMovieService).save(newShow)
             }
-
-
         }
     }
 
-    private fun getDummyShowRequest(startTime:ZonedDateTime): ShowRequest {
-        return ShowRequest(startTime.toInstant().toEpochMilli(),1, 200.0)
+    private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
+        return ShowRequest(startTime.toInstant().toEpochMilli(), 1, 200.0)
     }
 
     private fun getDummyShow(id: Int, startTime: ZonedDateTime): Show {

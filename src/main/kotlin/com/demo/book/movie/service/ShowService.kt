@@ -16,10 +16,10 @@ class ShowService(@Inject val showRepository: ShowRepository, @Inject val movieS
     fun save(showRequest: ShowRequest): Show {
         val shows = allShows()
         shows.forEach {
-            val durationInMilliSeconds : Int = movieService.findMovieById(it.movieId).duration * 60 *MILI_SECOND_CONVERTER
+            val durationInMilliSeconds: Int = movieService.findMovieById(it.movieId).duration * 60 * MILI_SECOND_CONVERTER
             if (
-                it.startTime!!.toEpochSecond(ZoneOffset.ofHoursMinutes(GMT_HOUR, GMT_MINUTE))*MILI_SECOND_CONVERTER <= showRequest.startTime &&
-                it.startTime.toEpochSecond(ZoneOffset.ofHoursMinutes(GMT_HOUR, GMT_MINUTE))*MILI_SECOND_CONVERTER + durationInMilliSeconds >= showRequest.startTime
+                it.startTime!!.toEpochSecond(ZoneOffset.ofHoursMinutes(GMT_HOUR, GMT_MINUTE)) * MILI_SECOND_CONVERTER <= showRequest.startTime &&
+                it.startTime.toEpochSecond(ZoneOffset.ofHoursMinutes(GMT_HOUR, GMT_MINUTE)) * MILI_SECOND_CONVERTER + durationInMilliSeconds >= showRequest.startTime
             ) throw UnsupportedOperationException("A show is already running at this time")
         }
         return showRepository.save(showRequest)

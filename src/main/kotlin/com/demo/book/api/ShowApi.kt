@@ -21,7 +21,7 @@ class ShowApi(@Inject val showService: ShowService) {
     }
 
     @Post("/shows")
-    fun saveShow(@Body showRequest: ShowRequest) : MutableHttpResponse<Int> {
+    fun saveShow(@Body showRequest: ShowRequest): MutableHttpResponse<Int> {
         return try {
             HttpResponse.ok(showService.save(showRequest).id)
         } catch (e: UnsupportedOperationException) {
