@@ -1,5 +1,9 @@
 name: Java CI
 on: [push, pull_request]
+
+env:
+  MEDLY_GPR_READ: ${{ secrets.MEDLY_GPR_READ }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +22,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Lint
-        run: ./gradlew ktlintCheck
       - name: Gradle Build
         run: ./gradlew build
+      - name: Lint
+        run: ./gradlew ktlintCheck
