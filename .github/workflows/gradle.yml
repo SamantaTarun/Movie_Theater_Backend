@@ -1,5 +1,9 @@
 name: Java CI
 on: [push, pull_request]
+
+env:
+  MEDLY_GPR_READ: ${{ secrets.MEDLY_GPR_READ }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
