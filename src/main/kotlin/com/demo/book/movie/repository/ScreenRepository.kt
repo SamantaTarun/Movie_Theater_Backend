@@ -1,8 +1,10 @@
 package com.demo.book.movie.repository
-
 import com.demo.book.movie.entity.Screen
 import com.demo.book.movie.request.ScreenRequest
-import movie.*
+import movie.GetAllScreensParams
+import movie.GetAllScreensQuery
+import movie.SaveScreenParams
+import movie.SaveScreenQuery
 import norm.query
 import javax.inject.Inject
 import javax.inject.Singleton

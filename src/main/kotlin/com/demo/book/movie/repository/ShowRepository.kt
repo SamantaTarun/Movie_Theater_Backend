@@ -1,8 +1,10 @@
 package com.demo.book.movie.repository
-
 import com.demo.book.movie.entity.Show
 import com.demo.book.movie.request.ShowRequest
-import movie.*
+import movie.GetAllShowsParams
+import movie.GetAllShowsQuery
+import movie.SaveShowParams
+import movie.SaveShowQuery
 import norm.query
 import java.sql.Timestamp
 import java.time.Instant
