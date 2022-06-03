@@ -13,6 +13,7 @@ const val GMT_MINUTE = 30
 
 @Singleton
 class ShowService(@Inject val showRepository: ShowRepository, @Inject val movieService: MovieService) {
+    @kotlin.jvm.Throws(UnsupportedOperationException::class)
     fun save(showRequest: ShowRequest): Show {
         val shows = allShows()
         shows.forEach {
