@@ -82,6 +82,7 @@ class ShowServiceTest : StringSpec() {
             val bookRequest = getDummyBookRequest(20)
             val referenceDate = ZonedDateTime.of(2021, 5, 21, 1, 15, 0, 0, ZoneId.systemDefault())
             val existingShow = getDummyShow(1, referenceDate)
+            every { mockShowRepository.availableSeats(1) } returns listOf(1, 2, 3, 4)
             every { mockShowRepository.findOne(1) } returns existingShow
             every { mockShowRepository.bookSeats(bookRequest) } returns 1
             val actual = ShowService(mockShowRepository, mockMovieService).bookSeats(bookRequest)
