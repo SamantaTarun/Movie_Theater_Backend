@@ -21,18 +21,14 @@ class MovieRepository(@Inject private val datasource: DataSource) {
             connection,
             SaveMovieParams(
                 movieToSave.title,
-                movieToSave.duration,
-                movieToSave.language,
-                movieToSave.price.toBigDecimal()
+                movieToSave.duration
             )
         )
     }.map {
         Movie(
             it.id,
             it.title,
-            it.duration!!,
-            it.language!!,
-            it.price!!.toDouble(),
+            it.duration!!
         )
     }.first()
 
@@ -45,9 +41,7 @@ class MovieRepository(@Inject private val datasource: DataSource) {
         Movie(
             it.id,
             it.title,
-            it.duration!!,
-            it.language!!,
-            it.price!!.toDouble(),
+            it.duration!!
         )
     }
 
@@ -63,9 +57,7 @@ class MovieRepository(@Inject private val datasource: DataSource) {
         Movie(
             it.id,
             it.title,
-            it.duration!!,
-            it.language!!,
-            it.price!!.toDouble(),
+            it.duration!!
         )
     }.first()
 }

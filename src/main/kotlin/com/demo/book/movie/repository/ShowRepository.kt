@@ -33,8 +33,8 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             it.startTime.toLocalDateTime(),
             it.movieId,
             it.price.toDouble(),
-            it.movielanguage!!,
-            it.movietype!!
+            it.movielanguage,
+            it.movietype
 
         )
     }.first()
@@ -50,8 +50,8 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             it.startTime.toLocalDateTime(),
             it.movieId,
             it.price.toDouble(),
-            it.movielanguage!!,
-            it.movietype!!
+            it.movielanguage,
+            it.movietype
         )
     }
 }

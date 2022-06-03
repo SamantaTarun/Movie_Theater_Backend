@@ -50,9 +50,7 @@ class MovieApiTest : BaseIntegrationSpec() {
                 |{
                 |  "id" : 1,
                 |  "title" : "Avengers",
-                |  "duration" : 120,
-                |  "language" : "English",
-                |  "price" : 100.0
+                |  "duration" : 120
                 |}
             """.trimMargin().trimIndent()
         }
@@ -83,10 +81,7 @@ class MovieApiTest : BaseIntegrationSpec() {
     private fun newMovieRequest(duration: Int): MovieRequest {
         return MovieRequest(
             "Avengers",
-            duration,
-            "English",
-            100.0,
-
+            duration
         )
     }
 }

@@ -1,3 +1,3 @@
-INSERT INTO movies(title, duration, language, price)
-VALUES (:title, :duration, :language, :price)
+INSERT INTO movies(title, duration)
+VALUES (:title, :duration)
 returning *;

@@ -69,7 +69,7 @@ class ShowServiceTest : StringSpec() {
             val newShow = getDummyShowRequest(referenceDateTwo)
 
             every { mockShowRepository.findAll() } returns listOf(existingShow)
-            every { mockMovieService.findMovieById(1) } returns Movie(1, "test", 30, "English", 100.00)
+            every { mockMovieService.findMovieById(1) } returns Movie(1, "test", 30)
             every { mockShowRepository.save(newShow) } returns getDummyShow(1, referenceDate)
 
             shouldThrow<UnsupportedOperationException> {
