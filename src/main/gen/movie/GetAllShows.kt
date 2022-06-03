@@ -22,7 +22,9 @@ public class GetAllShowsRowMapper : RowMapper<GetAllShowsResult> {
         id = rs.getObject("id") as kotlin.Int,
         startTime = rs.getObject("start_time") as java.sql.Timestamp,
         movieId = rs.getObject("movie_id") as kotlin.Int,
-        price = rs.getObject("price") as java.math.BigDecimal
+        price = rs.getObject("price") as java.math.BigDecimal,
+        movielanguage = rs.getObject("movielanguage") as kotlin.String,
+        movietype = rs.getObject("movietype") as kotlin.String
     )
 }
 
@@ -40,5 +42,7 @@ public data class GetAllShowsResult(
     public val id: Int,
     public val startTime: Timestamp,
     public val movieId: Int,
-    public val price: BigDecimal
+    public val price: BigDecimal,
+    public val movielanguage: String,
+    public val movietype: String
 )

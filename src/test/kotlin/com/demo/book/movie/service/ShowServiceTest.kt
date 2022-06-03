@@ -79,10 +79,10 @@ class ShowServiceTest : StringSpec() {
     }
 
     private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
-        return ShowRequest(startTime.toInstant().toEpochMilli(), 1, 200.0)
+        return ShowRequest(startTime.toInstant().toEpochMilli(), 1, 200.0, "English", "2D")
     }
 
     private fun getDummyShow(id: Int, startTime: ZonedDateTime): Show {
-        return Show(id, startTime.toLocalDateTime(), 1, 500.0)
+        return Show(id, startTime.toLocalDateTime(), 1, 500.0, "English", "2D")
     }
 }

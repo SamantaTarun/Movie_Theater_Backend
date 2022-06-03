@@ -13,7 +13,9 @@ import kotlin.String
 public data class SaveShowParams(
     public val start_time: Timestamp?,
     public val movie_id: Int?,
-    public val price: BigDecimal?
+    public val price: BigDecimal?,
+    public val movieLanguage: String?,
+    public val movieType: String?
 )
 
 public class SaveShowParamSetter : ParamSetter<SaveShowParams> {
@@ -21,6 +23,8 @@ public class SaveShowParamSetter : ParamSetter<SaveShowParams> {
         ps.setObject(1, params.start_time)
         ps.setObject(2, params.movie_id)
         ps.setObject(3, params.price)
+        ps.setObject(4, params.movieLanguage)
+        ps.setObject(5, params.movieType)
     }
 }
 
@@ -29,14 +33,16 @@ public class SaveShowRowMapper : RowMapper<SaveShowResult> {
         id = rs.getObject("id") as kotlin.Int,
         startTime = rs.getObject("start_time") as java.sql.Timestamp,
         movieId = rs.getObject("movie_id") as kotlin.Int,
-        price = rs.getObject("price") as java.math.BigDecimal
+        price = rs.getObject("price") as java.math.BigDecimal,
+        movielanguage = rs.getObject("movielanguage") as kotlin.String,
+        movietype = rs.getObject("movietype") as kotlin.String
     )
 }
 
 public class SaveShowQuery : Query<SaveShowParams, SaveShowResult> {
     public override val sql: String = """
-      |INSERT INTO shows(start_time, movie_id, price)
-      |VALUES (?, ?, ?)
+      |INSERT INTO shows(start_time, movie_id, price,movieLanguage,movieType)
+      |VALUES (?, ?, ?, ?, ?)
       |returning *;
       |""".trimMargin()
 
@@ -49,5 +55,7 @@ public data class SaveShowResult(
     public val id: Int,
     public val startTime: Timestamp,
     public val movieId: Int,
-    public val price: BigDecimal
+    public val price: BigDecimal,
+    public val movielanguage: String,
+    public val movietype: String
 )

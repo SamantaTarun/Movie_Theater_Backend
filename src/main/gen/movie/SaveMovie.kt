@@ -51,6 +51,6 @@ public data class SaveMovieResult(
     public val id: Int,
     public val title: String,
     public val duration: Int?,
-    public val language: String?,
     public val price: BigDecimal?,
+    public val language: String?
 )
