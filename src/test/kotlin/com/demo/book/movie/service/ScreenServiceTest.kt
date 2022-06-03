@@ -14,12 +14,13 @@ class ScreenServiceTest : StringSpec() {
             val screenRequest = ScreenRequest("Screen 1", 100)
             val expected = Screen(1, "Screen 1", 100)
             every { mockScreenRepository.save(screenRequest) } returns expected
+            every { mockScreenRepository.findAll() } returns listOf(Screen(2, "Screen 2", 100))
             val screenService = ScreenService(mockScreenRepository)
             val result = screenService.save(screenRequest)
             assert(result == expected)
         }
 
-        "should able to call allMovies method on ScreenService" {
+        "should able to call allScreens method on ScreenService" {
             val mockScreenRepository = mockk<ScreenRepository>()
             every { mockScreenRepository.findAll() } returns listOf(Screen(1, "Screen 1", 100))
             val screenService = ScreenService(mockScreenRepository)
