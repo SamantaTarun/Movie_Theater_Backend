@@ -1,12 +1,14 @@
 package com.demo.book.movie.repository
 
 import com.demo.book.movie.entity.Movie
-import com.demo.book.movie.entity.Show
 import com.demo.book.movie.request.MovieRequest
-import movie.*
+import movie.GetAllMoviesParams
+import movie.GetAllMoviesQuery
+import movie.MovieByIdParams
+import movie.MovieByIdQuery
+import movie.SaveMovieParams
+import movie.SaveMovieQuery
 import norm.query
-import java.sql.Timestamp
-import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 import javax.sql.DataSource
@@ -19,14 +21,18 @@ class MovieRepository(@Inject private val datasource: DataSource) {
             connection,
             SaveMovieParams(
                 movieToSave.title,
-                movieToSave.duration
+                movieToSave.duration,
+                movieToSave.language,
+                movieToSave.price.toBigDecimal()
             )
         )
     }.map {
         Movie(
             it.id,
             it.title,
-            it.duration!!
+            it.duration!!,
+            it.language!!,
+            it.price!!.toDouble(),
         )
     }.first()
 
@@ -39,23 +45,27 @@ class MovieRepository(@Inject private val datasource: DataSource) {
         Movie(
             it.id,
             it.title,
-            it.duration!!
+            it.duration!!,
+            it.language!!,
+            it.price!!.toDouble(),
         )
     }
 
     fun findOne(id: Int): Movie = datasource.connection.use {
-            connection ->  MovieByIdQuery().query(
-        connection,
-        MovieByIdParams(
-            id
+        connection ->
+        MovieByIdQuery().query(
+            connection,
+            MovieByIdParams(
+                id
+            )
         )
-    )
     }.map {
         Movie(
             it.id,
             it.title,
-            it.duration!!
+            it.duration!!,
+            it.language!!,
+            it.price!!.toDouble(),
         )
     }.first()
-
 }

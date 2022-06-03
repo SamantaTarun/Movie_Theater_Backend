@@ -1,11 +1,11 @@
 package com.demo.book.movie.repository
 
-import com.demo.book.movie.entity.Movie
 import com.demo.book.movie.entity.Show
-import com.demo.book.movie.request.MovieRequest
 import com.demo.book.movie.request.ShowRequest
-import liquibase.pro.packaged.it
-import movie.*
+import movie.GetAllShowsParams
+import movie.GetAllShowsQuery
+import movie.SaveShowParams
+import movie.SaveShowQuery
 import norm.query
 import java.sql.Timestamp
 import java.time.Instant
@@ -21,14 +21,21 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             connection,
             SaveShowParams(
                 Timestamp.from(Instant.ofEpochMilli(showToSave.startTime)),
-                showToSave.movieId
+                showToSave.movieId,
+                showToSave.price.toBigDecimal(),
+                showToSave.movieLanguage,
+                showToSave.movieType
             )
         )
     }.map {
         Show(
             it.id,
             it.startTime.toLocalDateTime(),
-            it.movieId
+            it.movieId,
+            it.price.toDouble(),
+            it.movielanguage!!,
+            it.movietype!!
+
         )
     }.first()
 
@@ -41,8 +48,10 @@ class ShowRepository(@Inject private val datasource: DataSource) {
         Show(
             it.id,
             it.startTime.toLocalDateTime(),
-            it.movieId
+            it.movieId,
+            it.price.toDouble(),
+            it.movielanguage!!,
+            it.movietype!!
         )
     }
-
 }

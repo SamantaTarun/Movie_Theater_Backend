@@ -15,7 +15,6 @@ import java.time.ZonedDateTime
 
 class ShowApiTest : BaseIntegrationSpec() {
 
-
     init {
         "should save Show" {
             // Given
@@ -63,7 +62,10 @@ class ShowApiTest : BaseIntegrationSpec() {
                 |{
                 |  "id" : 1,
                 |  "startTime" : "2021-06-01 09:15:00.000",
-                |  "movieId" : 1
+                |  "movieId" : 1,
+                |  "price" : 100.0,
+                |  "movieLanguage" : "English",
+                |  "movieType" : "2D"
                 |}
             """.trimMargin().trimIndent()
         }
@@ -82,12 +84,13 @@ class ShowApiTest : BaseIntegrationSpec() {
                 )
             )
 
-            //When
+            // When
             try {
                 val response = createNewShow(
-                    newShowRequest(referenceDate.toInstant().toEpochMilli()))
+                    newShowRequest(referenceDate.toInstant().toEpochMilli())
+                )
             } catch (e: HttpClientResponseException) {
-                e.status shouldBe HttpStatus.BAD_REQUEST
+                e.status shouldBe HttpStatus.CONFLICT
             }
         }
     }
@@ -102,7 +105,10 @@ class ShowApiTest : BaseIntegrationSpec() {
     private fun newShowRequest(start_time: Long): ShowRequest {
         return ShowRequest(
             startTime = start_time,
-            1
+            1,
+            100.00,
+            "English",
+            "2D"
         )
     }
 
@@ -116,9 +122,9 @@ class ShowApiTest : BaseIntegrationSpec() {
     private fun newMovieRequest(duration: Int): MovieRequest {
         return MovieRequest(
             "Avengers",
-            duration
+            duration,
+            "English",
+            100.00
         )
     }
-
 }
-

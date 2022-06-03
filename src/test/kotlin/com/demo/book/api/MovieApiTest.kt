@@ -9,7 +9,6 @@ import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import org.junit.jupiter.api.assertThrows
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -51,7 +50,9 @@ class MovieApiTest : BaseIntegrationSpec() {
                 |{
                 |  "id" : 1,
                 |  "title" : "Avengers",
-                |  "duration" : 120
+                |  "duration" : 120,
+                |  "language" : "English",
+                |  "price" : 100.0
                 |}
             """.trimMargin().trimIndent()
         }
@@ -63,7 +64,7 @@ class MovieApiTest : BaseIntegrationSpec() {
                 420
             )
 
-            //When
+            // When
             try {
                 val response = createNewMovie(avengersMovie)
             } catch (e: HttpClientResponseException) {
@@ -82,7 +83,10 @@ class MovieApiTest : BaseIntegrationSpec() {
     private fun newMovieRequest(duration: Int): MovieRequest {
         return MovieRequest(
             "Avengers",
-            duration
+            duration,
+            "English",
+            100.0,
+
         )
     }
 }
