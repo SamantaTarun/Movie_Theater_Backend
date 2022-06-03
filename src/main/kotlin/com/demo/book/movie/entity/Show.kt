@@ -7,6 +7,6 @@ data class Show(
     val id: Int,
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     val startTime: LocalDateTime?,
-    val movieId : Int,
-    val seats : Int?
+    val movieId: Int,
+    val seats: Int?
 )

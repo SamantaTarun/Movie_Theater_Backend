@@ -6,17 +6,11 @@ import com.demo.book.movie.request.MovieRequest
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
-import io.kotest.matchers.ints.exactly
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import org.junit.jupiter.api.assertThrows
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import kotlin.math.exp
 
 class MovieServiceTest : StringSpec() {
     private val mockMovieRepository = mockk<MovieRepository>()
@@ -52,7 +46,7 @@ class MovieServiceTest : StringSpec() {
             actual shouldBe expected
         }
 
-        "Adding a movie with length less than 4 minutes should throw an error"{
+        "Adding a movie with length less than 4 minutes should throw an error" {
             assertThrows<InvalidDurationException> {
                 MovieService(mockMovieRepository).save(
                     getDummyMovieRequest(4)
@@ -60,7 +54,7 @@ class MovieServiceTest : StringSpec() {
             }
         }
 
-        "Adding a movie with length less than 0 minutes should throw an error"{
+        "Adding a movie with length less than 0 minutes should throw an error" {
             assertThrows<InvalidDurationException> {
                 MovieService(mockMovieRepository).save(
                     getDummyMovieRequest(0)
@@ -77,12 +71,14 @@ class MovieServiceTest : StringSpec() {
         }
     }
 
-    private fun getDummyMovieRequest(duration: Int): MovieRequest{
-        return MovieRequest("test",duration)
+    private fun getDummyMovieRequest(duration: Int): MovieRequest {
+        return MovieRequest("test", duration)
     }
 
-    private fun getDummyMovie(duration: Int): Movie{
-        return Movie(1, "test",
-            duration)
+    private fun getDummyMovie(duration: Int): Movie {
+        return Movie(
+            1, "test",
+            duration
+        )
     }
 }
