@@ -5,5 +5,3 @@ data class Screen(
     val title: String,
     val capacity: Int,
 )
-
-

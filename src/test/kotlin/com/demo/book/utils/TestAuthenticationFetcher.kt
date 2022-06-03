@@ -8,9 +8,9 @@ import io.micronaut.security.authentication.Authentication
 import io.micronaut.security.filters.AuthenticationFetcher
 import io.micronaut.security.token.TokenAuthenticationFetcher
 import io.micronaut.security.token.jwt.validator.AuthenticationJWTClaimsSetAdapter
-import javax.inject.Singleton
 import org.reactivestreams.Publisher
 import reactor.core.publisher.Mono
+import javax.inject.Singleton
 
 @Singleton
 @Primary

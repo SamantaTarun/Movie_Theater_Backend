@@ -1,10 +1,7 @@
 package com.demo.book.api
 
-import com.demo.book.movie.entity.Movie
 import com.demo.book.movie.entity.Screen
 import com.demo.book.movie.request.ScreenRequest
-import com.demo.book.movie.request.ShowRequest
-import com.demo.book.movie.service.MovieService
 import com.demo.book.movie.service.ScreenService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -24,9 +21,9 @@ class ScreenApi(@Inject val screenService: ScreenService) {
 
     @Post
     fun addScreen(@Body screeRequest: ScreenRequest): HttpResponse<Int> {
-        return try{
+        return try {
             HttpResponse.ok(screenService.save(screeRequest).id)
-        }catch (error: Exception){
+        } catch (error: Exception) {
             HttpResponse.status(HttpStatus.BAD_REQUEST, error.message)
         }
     }

@@ -1,6 +1,5 @@
 package com.demo.book.movie.repository
 
-import com.demo.book.movie.entity.Movie
 import com.demo.book.movie.entity.Screen
 import com.demo.book.movie.request.ScreenRequest
 import movie.*

@@ -15,7 +15,6 @@ import java.time.ZonedDateTime
 
 class ShowApiTest : BaseIntegrationSpec() {
 
-
     init {
         "should save Show" {
             // Given
@@ -83,10 +82,11 @@ class ShowApiTest : BaseIntegrationSpec() {
                 )
             )
 
-            //When
+            // When
             try {
                 val response = createNewShow(
-                    newShowRequest(referenceDate.toInstant().toEpochMilli()))
+                    newShowRequest(referenceDate.toInstant().toEpochMilli())
+                )
             } catch (e: HttpClientResponseException) {
                 e.status shouldBe HttpStatus.CONFLICT
             }
@@ -121,6 +121,4 @@ class ShowApiTest : BaseIntegrationSpec() {
             duration
         )
     }
-
 }
-

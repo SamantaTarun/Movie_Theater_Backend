@@ -44,5 +44,4 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             it.price.toDouble()
         )
     }
-
 }

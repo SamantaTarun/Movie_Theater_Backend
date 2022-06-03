@@ -7,14 +7,14 @@ import io.kotest.core.spec.style.StringSpec
 import io.mockk.every
 import io.mockk.mockk
 
-class ScreenServiceTest: StringSpec() {
+class ScreenServiceTest : StringSpec() {
     init {
         "should able to call save method on ScreenService" {
             val mockScreenRepository = mockk<ScreenRepository>()
             val screenRequest = ScreenRequest("Screen 1", 100)
             val expected = Screen(1, "Screen 1", 100)
             every { mockScreenRepository.save(screenRequest) } returns expected
-            val screenService = ScreenService(mockScreenRepository);
+            val screenService = ScreenService(mockScreenRepository)
             val result = screenService.save(screenRequest)
             assert(result == expected)
         }
