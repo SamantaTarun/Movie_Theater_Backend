@@ -1,13 +1,27 @@
 package com.demo.book.movie.repository
 
-import com.demo.book.movie.entity.Movie
-import com.demo.book.movie.entity.Seat
 import com.demo.book.movie.entity.Show
+import com.demo.book.movie.entity.Ticket
 import com.demo.book.movie.request.BookRequest
-import com.demo.book.movie.request.MovieRequest
 import com.demo.book.movie.request.ShowRequest
-import liquibase.pro.packaged.it
-import movie.*
+import movie.GetAllShowsParams
+import movie.GetAllShowsQuery
+import movie.GetNotBookedSeatsParams
+import movie.GetNotBookedSeatsQuery
+import movie.GetOverlappingShowsParams
+import movie.GetOverlappingShowsQuery
+import movie.InsertSeatCommand
+import movie.InsertSeatParams
+import movie.SaveShowParams
+import movie.SaveShowQuery
+import movie.SaveTicketParams
+import movie.SaveTicketQuery
+import movie.ShowByIdParams
+import movie.ShowByIdQuery
+import movie.UpdateSeatStatusCommand
+import movie.UpdateSeatStatusParams
+import movie.UpdateSeatsCommand
+import movie.UpdateSeatsParams
 import norm.command
 import norm.query
 import java.sql.Timestamp
@@ -53,18 +67,20 @@ class ShowRepository(@Inject private val datasource: DataSource) {
     fun bookSeats(bookRequest: BookRequest): Int = datasource.connection.use { connection ->
         UpdateSeatsCommand().command(
             connection,
-            UpdateSeatsParams(bookRequest.seats,
-                bookRequest.showId)
+            UpdateSeatsParams(
+                bookRequest.seats,
+                bookRequest.showId
+            )
         ).updatedRecordsCount
     }
 
-    fun findOne(id: Int): Show = datasource.connection.use {
-            connection ->  ShowByIdQuery().query(
-        connection,
-        ShowByIdParams(
-            id
+    fun findOne(id: Int): Show = datasource.connection.use { connection ->
+        ShowByIdQuery().query(
+            connection,
+            ShowByIdParams(
+                id
+            )
         )
-    )
     }.map {
         Show(
             it.id,
@@ -105,4 +121,35 @@ class ShowRepository(@Inject private val datasource: DataSource) {
         it.seatNo
     }
 
+    fun generateTicket(userEmail: String, seatNo: Int, showId: Int): Ticket = datasource.connection.use {
+        connection ->
+        SaveTicketQuery().query(
+            connection,
+            SaveTicketParams(
+                userEmail,
+                seatNo,
+                showId
+            )
+        )
+    }.map {
+        Ticket(
+            it.id,
+            it.userEmail,
+            it.seatNumber,
+            it.showId
+        )
+    }.first()
+
+    fun getConflictingShows(startTime: Long, showEndTime: Long): Long = datasource.connection.use {
+        connection ->
+        GetOverlappingShowsQuery().query(
+            connection,
+            GetOverlappingShowsParams(
+                show_start_time = Timestamp(startTime),
+                show_end_time = Timestamp(showEndTime),
+            )
+        )
+    }.map {
+        it.count!!
+    }.first()
 }
