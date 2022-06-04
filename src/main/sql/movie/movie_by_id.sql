@@ -1,1 +1,1 @@
- select * from movies where id = :id;
+select * from movies where id = :id;
