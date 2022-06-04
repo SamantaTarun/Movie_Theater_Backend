@@ -42,7 +42,7 @@ class ShowApi(@Inject val showService: ShowService) {
         }
     }
 
-    @Get("/shows/{showId}")
+    @Get("/shows/seats/{showId}")
     fun getAvailableSeats(@PathVariable showId: Int): HttpResponse<List<Int>> {
         return HttpResponse.ok(showService.getAvailableSeats(showId))
     }
