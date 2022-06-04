@@ -26,7 +26,7 @@ public class GetNotBookedSeatsRowMapper : RowMapper<GetNotBookedSeatsResult> {
 
 public class GetNotBookedSeatsQuery : Query<GetNotBookedSeatsParams, GetNotBookedSeatsResult> {
     public override val sql: String = """
-      |SELECT seat_no FROM seats WHERE status = 'NOT BOOKED' and show_id = ?;
+      |SELECT seat_no FROM seats WHERE booked = FALSE and show_id = ?;
       |""".trimMargin()
 
     public override val mapper: RowMapper<GetNotBookedSeatsResult> = GetNotBookedSeatsRowMapper()

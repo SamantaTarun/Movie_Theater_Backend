@@ -1,1 +1,1 @@
-SELECT seat_no FROM seats WHERE status = FALSE and show_id = :show_id;
+SELECT seat_no FROM seats WHERE booked = FALSE and show_id = :show_id;
