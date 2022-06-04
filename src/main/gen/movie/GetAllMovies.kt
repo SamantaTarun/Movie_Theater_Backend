@@ -1,45 +1,45 @@
 package movie
 
+import norm.ParamSetter
+import norm.Query
+import norm.RowMapper
 import java.math.BigDecimal
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import kotlin.Int
 import kotlin.String
-import kotlin.Unit
-import norm.ParamSetter
-import norm.Query
-import norm.RowMapper
 
 public class GetAllMoviesParams()
 
 public class GetAllMoviesParamSetter : ParamSetter<GetAllMoviesParams> {
-  public override fun map(ps: PreparedStatement, params: GetAllMoviesParams): Unit {
-  }
+    public override fun map(ps: PreparedStatement, params: GetAllMoviesParams) {
+    }
 }
 
 public class GetAllMoviesRowMapper : RowMapper<GetAllMoviesResult> {
-  public override fun map(rs: ResultSet): GetAllMoviesResult = GetAllMoviesResult(
-  id = rs.getObject("id") as kotlin.Int,
-    title = rs.getObject("title") as kotlin.String,
-    duration = rs.getObject("duration") as kotlin.Int?,
-    price = rs.getObject("price") as java.math.BigDecimal?,
-    language = rs.getObject("language") as kotlin.String?)
+    public override fun map(rs: ResultSet): GetAllMoviesResult = GetAllMoviesResult(
+        id = rs.getObject("id") as kotlin.Int,
+        title = rs.getObject("title") as kotlin.String,
+        duration = rs.getObject("duration") as kotlin.Int?,
+        price = rs.getObject("price") as java.math.BigDecimal?,
+        language = rs.getObject("language") as kotlin.String?
+    )
 }
 
 public class GetAllMoviesQuery : Query<GetAllMoviesParams, GetAllMoviesResult> {
-  public override val sql: String = """
+    public override val sql: String = """
       |SELECT * FROM movies
       |""".trimMargin()
 
-  public override val mapper: RowMapper<GetAllMoviesResult> = GetAllMoviesRowMapper()
+    public override val mapper: RowMapper<GetAllMoviesResult> = GetAllMoviesRowMapper()
 
-  public override val paramSetter: ParamSetter<GetAllMoviesParams> = GetAllMoviesParamSetter()
+    public override val paramSetter: ParamSetter<GetAllMoviesParams> = GetAllMoviesParamSetter()
 }
 
 public data class GetAllMoviesResult(
-  public val id: Int,
-  public val title: String,
-  public val duration: Int?,
-  public val price: BigDecimal?,
-  public val language: String?
+    public val id: Int,
+    public val title: String,
+    public val duration: Int?,
+    public val price: BigDecimal?,
+    public val language: String?
 )
