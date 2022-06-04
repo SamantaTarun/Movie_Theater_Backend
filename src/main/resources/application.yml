@@ -8,7 +8,7 @@ micronaut:
     client:
       read-timeout: 60
   security:
-    enabled: true
+    enabled: false
     intercept-url-map:
       - pattern: /**/*
         http-method: POST
