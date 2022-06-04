@@ -21,7 +21,7 @@ public class UpdateSeatStatusParamSetter : ParamSetter<UpdateSeatStatusParams> {
 public class UpdateSeatStatusCommand : Command<UpdateSeatStatusParams> {
     public override val sql: String = """
       |UPDATE seats
-      |SET status = 'BOOKED'
+      |SET booked = TRUE
       |WHERE show_id = ? AND seat_no = ?;
       |""".trimMargin()
 
