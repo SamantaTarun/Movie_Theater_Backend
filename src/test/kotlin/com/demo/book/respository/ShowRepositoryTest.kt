@@ -24,19 +24,22 @@ class ShowRepositoryTest() : BaseIntegrationSpec() {
             val showRequest = getDummyShowRequest(startTime)
             MovieRepository(super.dataSource).save(getDummyMovieRequest(30))
             ShowRepository(super.dataSource).save(showRequest)
-            ShowRepository(super.dataSource).getConflictingShows(showRequest.startTime - 30 * 60000, showRequest.startTime + 10 * 60000) shouldBe 1
+            ShowRepository(super.dataSource).getConflictingShows(
+                showRequest.startTime - 30 * 60000,
+                showRequest.startTime + 10 * 60000
+            ) shouldBe 1
         }
     }
 
     private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
-        return ShowRequest(startTime.toInstant().toEpochMilli(), 1)
+        return ShowRequest(startTime.toInstant().toEpochMilli(), 1, 500.0, "English", "2D")
     }
 
     private fun getDummyShow(id: Int, startTime: ZonedDateTime): Show {
-        return Show(id, startTime.toLocalDateTime(), 1, 120)
+        return Show(id, startTime.toLocalDateTime(), 1, 500.0, "English", "2D", 120)
     }
 
     private fun getDummyMovieRequest(duration: Int): MovieRequest {
-        return MovieRequest("test", duration)
+        return MovieRequest("test", duration, "English", 100.00)
     }
 }

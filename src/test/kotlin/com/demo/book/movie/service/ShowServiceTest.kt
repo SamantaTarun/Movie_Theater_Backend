@@ -73,7 +73,7 @@ class ShowServiceTest : StringSpec() {
 
             every { mockShowRepository.getConflictingShows(newShow.startTime, newShow.startTime + 30 * 60000) } returns 1
             every { mockShowRepository.findAll() } returns listOf(existingShow)
-            every { mockMovieService.findMovieById(1) } returns Movie(1, "test", 30)
+            every { mockMovieService.findMovieById(1) } returns Movie(1, "test", 30, "English", 100.00)
             every { mockShowRepository.save(newShow) } returns getDummyShow(1, referenceDate)
 
             shouldThrow<UnsupportedOperationException> {
@@ -83,11 +83,11 @@ class ShowServiceTest : StringSpec() {
     }
 
     private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
-        return ShowRequest(startTime.toInstant().toEpochMilli(), 1)
+        return ShowRequest(startTime.toInstant().toEpochMilli(), 1, 200.0, "English", "2D")
     }
 
     private fun getDummyShow(id: Int, startTime: ZonedDateTime): Show {
-        return Show(id, startTime.toLocalDateTime(), 1, 120)
+        return Show(id, startTime.toLocalDateTime(), 1, 500.0, "English", "2D", 120)
     }
     private fun getDummyBookRequest(tickets: Int): BookRequest {
         return BookRequest(1, tickets, listOf(1, 2, 3))
@@ -96,7 +96,8 @@ class ShowServiceTest : StringSpec() {
     private fun getDummyMovie(duration: Int): Movie {
         return Movie(
             1, "test",
-            duration
+            duration,
+            "English", 100.00
         )
     }
 }

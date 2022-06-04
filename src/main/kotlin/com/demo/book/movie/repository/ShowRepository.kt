@@ -4,6 +4,7 @@ import com.demo.book.movie.entity.Show
 import com.demo.book.movie.entity.Ticket
 import com.demo.book.movie.request.BookRequest
 import com.demo.book.movie.request.ShowRequest
+import liquibase.pro.packaged.it
 import movie.GetAllShowsParams
 import movie.GetAllShowsQuery
 import movie.GetNotBookedSeatsParams
@@ -38,7 +39,10 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             connection,
             SaveShowParams(
                 Timestamp.from(Instant.ofEpochMilli(showToSave.startTime)),
-                showToSave.movieId
+                showToSave.movieId,
+                showToSave.price.toBigDecimal(),
+                showToSave.movieLanguage,
+                showToSave.movieType
             )
         )
     }.map {
@@ -46,6 +50,9 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             it.id,
             it.startTime.toLocalDateTime(),
             it.movieId,
+            it.price.toDouble(),
+            it.movielanguage,
+            it.movietype,
             it.seats
         )
     }.first()
@@ -60,6 +67,9 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             it.id,
             it.startTime.toLocalDateTime(),
             it.movieId,
+            it.price.toDouble(),
+            it.movielanguage,
+            it.movietype,
             it.seats
         )
     }
@@ -86,6 +96,9 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             it.id,
             it.startTime.toLocalDateTime(),
             it.movieId,
+            it.price.toDouble(),
+            it.movielanguage,
+            it.movietype,
             it.seats
         )
     }.first()
