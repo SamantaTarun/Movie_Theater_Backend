@@ -2,10 +2,9 @@ package com.demo.book.movie.service
 
 import com.demo.book.movie.entity.Movie
 import com.demo.book.movie.entity.Show
-import com.demo.book.movie.repository.MovieRepository
 import com.demo.book.movie.repository.ShowRepository
-import com.demo.book.movie.request.ShowRequest
 import com.demo.book.movie.request.BookRequest
+import com.demo.book.movie.request.ShowRequest
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.core.test.TestCase
@@ -30,15 +29,17 @@ class ShowServiceTest : StringSpec() {
 
     init {
 
-         "should be able to add the first show" {
-             val referenceDate = ZonedDateTime.of(2021, 5, 21, 11, 15, 0, 0, ZoneId.systemDefault())
-             val showRequest = getDummyShowRequest(referenceDate)
-             val expected = getDummyShow(1, referenceDate)
-             every { mockShowRepository.save(showRequest) } returns expected
-             every { mockShowRepository.findAll() } returns listOf()
-             val actual = ShowService(mockShowRepository, mockMovieService).save(showRequest)
-             actual shouldBe expected
-         }
+        "should be able to add the first show" {
+            val referenceDate = ZonedDateTime.of(2021, 5, 21, 11, 15, 0, 0, ZoneId.systemDefault())
+            val showRequest = getDummyShowRequest(referenceDate)
+            val expected = getDummyShow(1, referenceDate)
+            every { mockMovieService.findMovieById(1) } returns getDummyMovie(40)
+            every { mockShowRepository.getConflictingShows(showRequest.startTime, showRequest.startTime + 40 * 60000) } returns 0
+            every { mockShowRepository.save(showRequest) } returns expected
+            every { mockShowRepository.findAll() } returns listOf()
+            val actual = ShowService(mockShowRepository, mockMovieService).save(showRequest)
+            actual shouldBe expected
+        }
 
         "Given the theatre has no shows an empty list should be returned" {
             every { mockShowRepository.findAll() } returns listOf<Show>()
@@ -52,7 +53,7 @@ class ShowServiceTest : StringSpec() {
             val expected = getDummyShow(1, referenceDate)
 
             val referenceDateTwo = ZonedDateTime.of(2021, 5, 21, 3, 15, 0, 0, ZoneId.systemDefault())
-            val expectedTwo = getDummyShow(2 ,referenceDateTwo)
+            val expectedTwo = getDummyShow(2, referenceDateTwo)
 
             // returns list in increasing orders
             every { mockShowRepository.findAll() } returns listOf(expected, expectedTwo)
@@ -61,7 +62,6 @@ class ShowServiceTest : StringSpec() {
             println(actual)
 
             actual shouldBeSortedWith (compareByDescending { it.startTime })
-
         }
 
         "Adding an show overlapping with an existing show should throw an error" {
@@ -71,7 +71,7 @@ class ShowServiceTest : StringSpec() {
             val referenceDateTwo = ZonedDateTime.of(2021, 5, 21, 1, 30, 0, 0, ZoneId.systemDefault())
             val newShow = getDummyShowRequest(referenceDateTwo)
 
-
+            every { mockShowRepository.getConflictingShows(newShow.startTime, newShow.startTime + 30 * 60000) } returns 1
             every { mockShowRepository.findAll() } returns listOf(existingShow)
             every { mockMovieService.findMovieById(1) } returns Movie(1, "test", 30)
             every { mockShowRepository.save(newShow) } returns getDummyShow(1, referenceDate)
@@ -80,40 +80,23 @@ class ShowServiceTest : StringSpec() {
                 ShowService(mockShowRepository, mockMovieService).save(newShow)
             }
         }
-
-        "should be able to book seats" {
-            val bookRequest = getDummyBookRequest(20)
-            val referenceDate = ZonedDateTime.of(2021, 5, 21, 1, 15, 0, 0, ZoneId.systemDefault())
-            val existingShow = getDummyShow(1, referenceDate)
-            every { mockShowRepository.findOne(1) } returns existingShow
-            every { mockShowRepository.bookSeats(bookRequest) } returns 1
-            val actual = ShowService(mockShowRepository, mockMovieService).bookSeats(bookRequest)
-            actual shouldBe 1
-        }
-
-        "should throw an error when seats are not available" {
-            val bookRequest = getDummyBookRequest(200)
-            val referenceDate = ZonedDateTime.of(2021, 5, 21, 1, 15, 0, 0, ZoneId.systemDefault())
-            val existingShow = getDummyShow(1, referenceDate)
-
-            every { mockShowRepository.findOne(1) } returns existingShow
-            shouldThrow<UnsupportedOperationException> {
-                ShowService(mockShowRepository, mockMovieService).bookSeats(bookRequest)
-            }
-
-        }
-
     }
 
-    private fun getDummyShowRequest(startTime:ZonedDateTime): ShowRequest {
-        return ShowRequest(startTime.toInstant().toEpochMilli(),1)
+    private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
+        return ShowRequest(startTime.toInstant().toEpochMilli(), 1)
     }
 
     private fun getDummyShow(id: Int, startTime: ZonedDateTime): Show {
         return Show(id, startTime.toLocalDateTime(), 1, 120)
     }
     private fun getDummyBookRequest(tickets: Int): BookRequest {
-        return BookRequest(1, tickets, listOf(1,2,3))
+        return BookRequest(1, tickets, listOf(1, 2, 3))
     }
 
+    private fun getDummyMovie(duration: Int): Movie {
+        return Movie(
+            1, "test",
+            duration
+        )
+    }
 }
