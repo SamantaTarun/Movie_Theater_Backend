@@ -31,7 +31,7 @@ public class MovieByIdRowMapper : RowMapper<MovieByIdResult> {
 
 public class MovieByIdQuery : Query<MovieByIdParams, MovieByIdResult> {
     public override val sql: String = """
-      | select * from movies where id = ?;
+      |select * from movies where id = ?;
       |""".trimMargin()
 
     public override val mapper: RowMapper<MovieByIdResult> = MovieByIdRowMapper()

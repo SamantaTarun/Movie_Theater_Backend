@@ -12,5 +12,7 @@
     <include file="changelog/0.0.5-add-column-price.sql" relativeToChangelogFile="true"/>
     <include file="changelog/0.0.6-add-columns-language-price.sql" relativeToChangelogFile="true"/>
     <include file="changelog/0.0.7-add-column-language-type.sql" relativeToChangelogFile="true"/>
-
+    <include file="changelog/0.0.5-add-seats-column.sql" relativeToChangelogFile="true"/>
+    <include file="changelog/0.0.6-add-seats-table.sql" relativeToChangelogFile="true"/>
+    <include file="changelog/0.0.7-add-table-tickets.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

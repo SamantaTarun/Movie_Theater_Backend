@@ -10,5 +10,6 @@ data class Show(
     val movieId: Int,
     val price: Double,
     val movieLanguage: String,
-    val movieType: String
+    val movieType: String,
+    val seats: Int?
 )

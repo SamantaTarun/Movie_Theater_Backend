@@ -10,15 +10,18 @@ import java.sql.Timestamp
 import kotlin.Int
 import kotlin.String
 
-public class GetAllShowsParams()
+public data class ShowByIdParams(
+    public val id: Int?
+)
 
-public class GetAllShowsParamSetter : ParamSetter<GetAllShowsParams> {
-    public override fun map(ps: PreparedStatement, params: GetAllShowsParams) {
+public class ShowByIdParamSetter : ParamSetter<ShowByIdParams> {
+    public override fun map(ps: PreparedStatement, params: ShowByIdParams) {
+        ps.setObject(1, params.id)
     }
 }
 
-public class GetAllShowsRowMapper : RowMapper<GetAllShowsResult> {
-    public override fun map(rs: ResultSet): GetAllShowsResult = GetAllShowsResult(
+public class ShowByIdRowMapper : RowMapper<ShowByIdResult> {
+    public override fun map(rs: ResultSet): ShowByIdResult = ShowByIdResult(
         id = rs.getObject("id") as kotlin.Int,
         startTime = rs.getObject("start_time") as java.sql.Timestamp,
         movieId = rs.getObject("movie_id") as kotlin.Int,
@@ -29,17 +32,17 @@ public class GetAllShowsRowMapper : RowMapper<GetAllShowsResult> {
     )
 }
 
-public class GetAllShowsQuery : Query<GetAllShowsParams, GetAllShowsResult> {
+public class ShowByIdQuery : Query<ShowByIdParams, ShowByIdResult> {
     public override val sql: String = """
-      |SELECT * FROM shows
+      |select * from shows where id = ?;
       |""".trimMargin()
 
-    public override val mapper: RowMapper<GetAllShowsResult> = GetAllShowsRowMapper()
+    public override val mapper: RowMapper<ShowByIdResult> = ShowByIdRowMapper()
 
-    public override val paramSetter: ParamSetter<GetAllShowsParams> = GetAllShowsParamSetter()
+    public override val paramSetter: ParamSetter<ShowByIdParams> = ShowByIdParamSetter()
 }
 
-public data class GetAllShowsResult(
+public data class ShowByIdResult(
     public val id: Int,
     public val startTime: Timestamp,
     public val movieId: Int,

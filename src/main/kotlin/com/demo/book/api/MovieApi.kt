@@ -26,7 +26,7 @@ class MovieApi(@Inject val movieService: MovieService) {
         return try {
             HttpResponse.ok(movieService.save(movieRequest).id)
         } catch (e: InvalidDurationException) {
-            HttpResponse.status(HttpStatus.UNPROCESSABLE_ENTITY, "Duration cannot be less than 5 minutes and more than 6 hours")
+            HttpResponse.status(HttpStatus.UNPROCESSABLE_ENTITY, e.message)
         }
     }
 }

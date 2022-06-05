@@ -65,7 +65,8 @@ class ShowApiTest : BaseIntegrationSpec() {
                 |  "movieId" : 1,
                 |  "price" : 100.0,
                 |  "movieLanguage" : "English",
-                |  "movieType" : "2D"
+                |  "movieType" : "2D",
+                |  "seats" : 120
                 |}
             """.trimMargin().trimIndent()
         }
