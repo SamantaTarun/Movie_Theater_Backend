@@ -88,13 +88,11 @@ class ShowServiceTest : StringSpec() {
 
             val bookRequest = getDummyBookRequest()
             every { mockShowRepository.findOne(1) } returns existingShow
-            every { mockShowRepository.availableSeats(1) } returns listOf(1,2,3,4)
-            every { mockShowRepository.bookSeats(bookRequest)} returns 1
-            every { mockShowRepository.generateTicket("test@gmail.com",1,1)} returns getDummyTicket()
+            every { mockShowRepository.availableSeats(1) } returns listOf(1, 2, 3, 4)
+            every { mockShowRepository.bookSeats(bookRequest) } returns 1
+            every { mockShowRepository.generateTicket("test@gmail.com", 1, 1) } returns getDummyTicket()
 
             ShowService(mockShowRepository, mockMovieService).bookSeats(bookRequest, "test@gmail.com") shouldBe listOf(getDummyTicket())
-
-
         }
     }
 
@@ -117,7 +115,7 @@ class ShowServiceTest : StringSpec() {
         )
     }
 
-    private fun getDummyTicket() : Ticket {
+    private fun getDummyTicket(): Ticket {
         return Ticket(
             1,
             "test@gmail.com",

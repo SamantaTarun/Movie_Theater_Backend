@@ -14,7 +14,6 @@ import java.time.ZonedDateTime
 
 class ShowRepositoryTest() : BaseIntegrationSpec() {
 
-
     init {
         "should be able to save a show in the database" {
             val startTime = ZonedDateTime.of(2021, 5, 21, 11, 15, 0, 0, ZoneId.systemDefault())
@@ -39,8 +38,7 @@ class ShowRepositoryTest() : BaseIntegrationSpec() {
             val showRequest = getDummyShowRequest(startTime)
             MovieRepository(super.dataSource).save(getDummyMovieRequest(30))
             ShowRepository(super.dataSource).save(showRequest)
-            ShowRepository(super.dataSource).findOne(1) shouldBe getDummyShow(1,startTime)
-
+            ShowRepository(super.dataSource).findOne(1) shouldBe getDummyShow(1, startTime)
         }
 
         "should be able to book seats" {
@@ -60,7 +58,7 @@ class ShowRepositoryTest() : BaseIntegrationSpec() {
             MovieRepository(super.dataSource).save(getDummyMovieRequest(30))
             ShowRepository(super.dataSource).save(showRequest)
             ShowRepository(super.dataSource).save(showRequestTwo)
-            ShowRepository(super.dataSource).findAll() shouldBe listOf(getDummyShow(1,startTime), getDummyShow(2, startTimeTwo))
+            ShowRepository(super.dataSource).findAll() shouldBe listOf(getDummyShow(1, startTime), getDummyShow(2, startTimeTwo))
         }
 
         "should generate ticket" {
@@ -70,8 +68,6 @@ class ShowRepositoryTest() : BaseIntegrationSpec() {
             ShowRepository(super.dataSource).save(showRequest)
             ShowRepository(super.dataSource).generateTicket("test@gmail.com", 1, 1) shouldBe Ticket(1, "test@gmail.com", 1, 1)
         }
-
-
     }
 
     private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
