@@ -2,6 +2,7 @@ package com.demo.book.movie.service
 
 import com.demo.book.movie.entity.Movie
 import com.demo.book.movie.entity.Show
+import com.demo.book.movie.entity.Ticket
 import com.demo.book.movie.repository.ShowRepository
 import com.demo.book.movie.request.BookRequest
 import com.demo.book.movie.request.ShowRequest
@@ -80,6 +81,21 @@ class ShowServiceTest : StringSpec() {
                 ShowService(mockShowRepository, mockMovieService).save(newShow)
             }
         }
+
+        "Should be able to book seats" {
+            val referenceDate = ZonedDateTime.of(2021, 5, 21, 1, 15, 0, 0, ZoneId.systemDefault())
+            val existingShow = getDummyShow(1, referenceDate)
+
+            val bookRequest = getDummyBookRequest()
+            every { mockShowRepository.findOne(1) } returns existingShow
+            every { mockShowRepository.availableSeats(1) } returns listOf(1,2,3,4)
+            every { mockShowRepository.bookSeats(bookRequest)} returns 1
+            every { mockShowRepository.generateTicket("test@gmail.com",1,1)} returns getDummyTicket()
+
+            ShowService(mockShowRepository, mockMovieService).bookSeats(bookRequest, "test@gmail.com") shouldBe listOf(getDummyTicket())
+
+
+        }
     }
 
     private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
@@ -89,8 +105,8 @@ class ShowServiceTest : StringSpec() {
     private fun getDummyShow(id: Int, startTime: ZonedDateTime): Show {
         return Show(id, startTime.toLocalDateTime(), 1, 500.0, "English", "2D", 120)
     }
-    private fun getDummyBookRequest(tickets: Int): BookRequest {
-        return BookRequest(1, tickets, listOf(1, 2, 3))
+    private fun getDummyBookRequest(): BookRequest {
+        return BookRequest(1, 1, listOf(1))
     }
 
     private fun getDummyMovie(duration: Int): Movie {
@@ -98,6 +114,15 @@ class ShowServiceTest : StringSpec() {
             1, "test",
             duration,
             "English", 100.00
+        )
+    }
+
+    private fun getDummyTicket() : Ticket {
+        return Ticket(
+            1,
+            "test@gmail.com",
+            1,
+            1
         )
     }
 }
