@@ -72,13 +72,13 @@ class MovieServiceTest : StringSpec() {
     }
 
     private fun getDummyMovieRequest(duration: Int): MovieRequest {
-        return MovieRequest("test", duration)
+        return MovieRequest("test", duration, "English", 100.00)
     }
 
     private fun getDummyMovie(duration: Int): Movie {
         return Movie(
             1, "test",
-            duration
+            duration, "English", 100.00
         )
     }
 }

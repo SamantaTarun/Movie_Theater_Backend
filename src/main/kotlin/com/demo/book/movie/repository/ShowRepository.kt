@@ -21,7 +21,9 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             SaveShowParams(
                 Timestamp.from(Instant.ofEpochMilli(showToSave.startTime)),
                 showToSave.movieId,
-                showToSave.price.toBigDecimal()
+                showToSave.price.toBigDecimal(),
+                showToSave.movieLanguage,
+                showToSave.movieType
             )
         )
     }.map {
@@ -29,7 +31,10 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             it.id,
             it.startTime.toLocalDateTime(),
             it.movieId,
-            it.price.toDouble()
+            it.price.toDouble(),
+            it.movielanguage!!,
+            it.movietype!!
+
         )
     }.first()
 
@@ -43,7 +48,9 @@ class ShowRepository(@Inject private val datasource: DataSource) {
             it.id,
             it.startTime.toLocalDateTime(),
             it.movieId,
-            it.price.toDouble()
+            it.price.toDouble(),
+            it.movielanguage!!,
+            it.movietype!!
         )
     }
 }
