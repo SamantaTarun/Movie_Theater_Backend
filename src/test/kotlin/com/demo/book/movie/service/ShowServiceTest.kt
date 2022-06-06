@@ -74,7 +74,7 @@ class ShowServiceTest : StringSpec() {
 
             every { mockShowRepository.getConflictingShows(newShow.startTime, newShow.startTime + 30 * 60000) } returns 1
             every { mockShowRepository.findAll() } returns listOf(existingShow)
-            every { mockMovieService.findMovieById(1) } returns Movie(1, "test", 30, "English", 100.00)
+            every { mockMovieService.findMovieById(1) } returns Movie(1, "test", 30)
             every { mockShowRepository.save(newShow) } returns getDummyShow(1, referenceDate)
 
             shouldThrow<UnsupportedOperationException> {
@@ -110,8 +110,7 @@ class ShowServiceTest : StringSpec() {
     private fun getDummyMovie(duration: Int): Movie {
         return Movie(
             1, "test",
-            duration,
-            "English", 100.00
+            duration
         )
     }
 

@@ -79,7 +79,7 @@ class ShowRepositoryTest() : BaseIntegrationSpec() {
     }
 
     private fun getDummyMovieRequest(duration: Int): MovieRequest {
-        return MovieRequest("test", duration, "English", 100.00)
+        return MovieRequest("test", duration)
     }
 
     private fun getDummyBookRequest(): BookRequest {

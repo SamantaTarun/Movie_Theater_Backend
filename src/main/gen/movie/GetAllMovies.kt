@@ -3,7 +3,6 @@ package movie
 import norm.ParamSetter
 import norm.Query
 import norm.RowMapper
-import java.math.BigDecimal
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import kotlin.Int
@@ -20,9 +19,7 @@ public class GetAllMoviesRowMapper : RowMapper<GetAllMoviesResult> {
     public override fun map(rs: ResultSet): GetAllMoviesResult = GetAllMoviesResult(
         id = rs.getObject("id") as kotlin.Int,
         title = rs.getObject("title") as kotlin.String,
-        duration = rs.getObject("duration") as kotlin.Int?,
-        price = rs.getObject("price") as java.math.BigDecimal?,
-        language = rs.getObject("language") as kotlin.String?
+        duration = rs.getObject("duration") as kotlin.Int?
     )
 }
 
@@ -39,7 +36,5 @@ public class GetAllMoviesQuery : Query<GetAllMoviesParams, GetAllMoviesResult> {
 public data class GetAllMoviesResult(
     public val id: Int,
     public val title: String,
-    public val duration: Int?,
-    public val price: BigDecimal?,
-    public val language: String?
+    public val duration: Int?
 )
