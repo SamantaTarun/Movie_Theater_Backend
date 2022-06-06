@@ -12,6 +12,7 @@ const val MILI_SECOND_CONVERTER = 60000
 
 @Singleton
 class ShowService(@Inject val showRepository: ShowRepository, @Inject val movieService: MovieService) {
+    @kotlin.jvm.Throws(UnsupportedOperationException::class)
     fun save(showRequest: ShowRequest): Show {
         val showEndTime = showRequest.startTime + movieService.findMovieById(showRequest.movieId).duration * MILI_SECOND_CONVERTER
         if (showRepository.getConflictingShows(
