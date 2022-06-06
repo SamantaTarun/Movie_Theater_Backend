@@ -1,13 +1,13 @@
 package com.demo.book.respository
 
 import com.demo.book.BaseIntegrationSpec
-import com.demo.book.movie.entity.Show
 import com.demo.book.movie.entity.Ticket
 import com.demo.book.movie.repository.MovieRepository
 import com.demo.book.movie.repository.ShowRepository
-import com.demo.book.movie.request.BookRequest
-import com.demo.book.movie.request.MovieRequest
-import com.demo.book.movie.request.ShowRequest
+import com.demo.book.utils.getDummyBookRequest
+import com.demo.book.utils.getDummyMovieRequest
+import com.demo.book.utils.getDummyShow
+import com.demo.book.utils.getDummyShowRequest
 import io.kotest.matchers.shouldBe
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -68,21 +68,5 @@ class ShowRepositoryTest() : BaseIntegrationSpec() {
             ShowRepository(super.dataSource).save(showRequest)
             ShowRepository(super.dataSource).generateTicket("test@gmail.com", 1, 1) shouldBe Ticket(1, "test@gmail.com", 1, 1)
         }
-    }
-
-    private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
-        return ShowRequest(startTime.toInstant().toEpochMilli(), 1, 500.0, "English", "2D")
-    }
-
-    private fun getDummyShow(id: Int, startTime: ZonedDateTime): Show {
-        return Show(id, startTime.toLocalDateTime(), 1, 500.0, "English", "2D", 120)
-    }
-
-    private fun getDummyMovieRequest(duration: Int): MovieRequest {
-        return MovieRequest("test", duration)
-    }
-
-    private fun getDummyBookRequest(): BookRequest {
-        return BookRequest(1, 1, listOf(1))
     }
 }

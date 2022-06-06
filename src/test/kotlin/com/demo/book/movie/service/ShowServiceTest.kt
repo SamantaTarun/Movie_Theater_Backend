@@ -2,10 +2,12 @@ package com.demo.book.movie.service
 
 import com.demo.book.movie.entity.Movie
 import com.demo.book.movie.entity.Show
-import com.demo.book.movie.entity.Ticket
 import com.demo.book.movie.repository.ShowRepository
-import com.demo.book.movie.request.BookRequest
-import com.demo.book.movie.request.ShowRequest
+import com.demo.book.utils.getDummyBookRequest
+import com.demo.book.utils.getDummyMovie
+import com.demo.book.utils.getDummyShow
+import com.demo.book.utils.getDummyShowRequest
+import com.demo.book.utils.getDummyTicket
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.core.test.TestCase
@@ -94,32 +96,5 @@ class ShowServiceTest : StringSpec() {
 
             ShowService(mockShowRepository, mockMovieService).bookSeats(bookRequest, "test@gmail.com") shouldBe listOf(getDummyTicket())
         }
-    }
-
-    private fun getDummyShowRequest(startTime: ZonedDateTime): ShowRequest {
-        return ShowRequest(startTime.toInstant().toEpochMilli(), 1, 200.0, "English", "2D")
-    }
-
-    private fun getDummyShow(id: Int, startTime: ZonedDateTime): Show {
-        return Show(id, startTime.toLocalDateTime(), 1, 500.0, "English", "2D", 120)
-    }
-    private fun getDummyBookRequest(): BookRequest {
-        return BookRequest(1, 1, listOf(1))
-    }
-
-    private fun getDummyMovie(duration: Int): Movie {
-        return Movie(
-            1, "test",
-            duration
-        )
-    }
-
-    private fun getDummyTicket(): Ticket {
-        return Ticket(
-            1,
-            "test@gmail.com",
-            1,
-            1
-        )
     }
 }
