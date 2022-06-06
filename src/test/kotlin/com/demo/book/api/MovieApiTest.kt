@@ -86,7 +86,6 @@ class MovieApiTest : BaseIntegrationSpec() {
             duration,
             "English",
             100.0,
-
         )
     }
 }

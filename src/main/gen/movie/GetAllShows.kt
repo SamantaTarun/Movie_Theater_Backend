@@ -1,21 +1,20 @@
 package movie
 
+import norm.ParamSetter
+import norm.Query
+import norm.RowMapper
 import java.math.BigDecimal
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Timestamp
 import kotlin.Int
 import kotlin.String
-import kotlin.Unit
-import norm.ParamSetter
-import norm.Query
-import norm.RowMapper
 
 public class GetAllShowsParams()
 
 public class GetAllShowsParamSetter : ParamSetter<GetAllShowsParams> {
-  public override fun map(ps: PreparedStatement, params: GetAllShowsParams): Unit {
-  }
+    public override fun map(ps: PreparedStatement, params: GetAllShowsParams) {
+    }
 }
 
 public class GetAllShowsRowMapper : RowMapper<GetAllShowsResult> {
@@ -31,13 +30,13 @@ public class GetAllShowsRowMapper : RowMapper<GetAllShowsResult> {
 }
 
 public class GetAllShowsQuery : Query<GetAllShowsParams, GetAllShowsResult> {
-  public override val sql: String = """
+    public override val sql: String = """
       |SELECT * FROM shows
       |""".trimMargin()
 
-  public override val mapper: RowMapper<GetAllShowsResult> = GetAllShowsRowMapper()
+    public override val mapper: RowMapper<GetAllShowsResult> = GetAllShowsRowMapper()
 
-  public override val paramSetter: ParamSetter<GetAllShowsParams> = GetAllShowsParamSetter()
+    public override val paramSetter: ParamSetter<GetAllShowsParams> = GetAllShowsParamSetter()
 }
 
 public data class GetAllShowsResult(
