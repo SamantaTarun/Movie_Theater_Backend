@@ -23,7 +23,7 @@ class MovieApi(@Inject val movieService: MovieService) {
     }
 
     @Post("/movies")
-    @ClaimsAllowed(claimKey = "adminRights", claimValues = ["read"])
+    @ClaimsAllowed(claimKey = "adminRights", claimValues = ["write"])
     fun saveMovie(@Body movieRequest: MovieRequest): MutableHttpResponse<Int> {
         return try {
             HttpResponse.ok(movieService.save(movieRequest).id)
