@@ -39,4 +39,3 @@ fun getDummyTicket(): Ticket {
         1
     )
 }
-

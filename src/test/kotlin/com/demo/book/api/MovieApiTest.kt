@@ -9,8 +9,6 @@ import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import java.time.ZoneId
-import java.time.ZonedDateTime
 
 class MovieApiTest : BaseIntegrationSpec() {
 
