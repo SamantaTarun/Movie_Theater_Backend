@@ -1,5 +1,6 @@
 package com.demo.book.api
 
+import auth.token.verifier.annotation.ClaimsAllowed
 import com.demo.book.movie.entity.Show
 import com.demo.book.movie.entity.Ticket
 import com.demo.book.movie.request.BookRequest
@@ -25,6 +26,7 @@ class ShowApi(@Inject val showService: ShowService) {
     }
 
     @Post("/shows")
+    @ClaimsAllowed(claimKey = "adminRights", claimValues = ["write"])
     fun saveShow(@Body showRequest: ShowRequest): MutableHttpResponse<Int> {
         return try {
             HttpResponse.ok(showService.save(showRequest).id)

@@ -1,5 +1,6 @@
 package com.demo.book.api
 
+import auth.token.verifier.annotation.ClaimsAllowed
 import com.demo.book.movie.entity.Screen
 import com.demo.book.movie.request.ScreenRequest
 import com.demo.book.movie.service.ScreenService
@@ -20,6 +21,7 @@ class ScreenApi(@Inject val screenService: ScreenService) {
     }
 
     @Post
+    @ClaimsAllowed(claimKey = "adminRights", claimValues = ["write"])
     fun addScreen(@Body screeRequest: ScreenRequest): HttpResponse<Int> {
         return try {
             HttpResponse.ok(screenService.save(screeRequest).id)
