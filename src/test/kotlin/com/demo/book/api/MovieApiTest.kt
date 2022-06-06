@@ -9,15 +9,12 @@ import io.kotest.matchers.shouldBe
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import java.time.ZoneId
-import java.time.ZonedDateTime
 
 class MovieApiTest : BaseIntegrationSpec() {
 
     init {
         "should save movie" {
             // Given
-            val referenceDate = ZonedDateTime.of(2021, 5, 21, 11, 15, 0, 0, ZoneId.systemDefault())
             val avengersMovie = newMovieRequest(
                 120
             )
@@ -32,7 +29,6 @@ class MovieApiTest : BaseIntegrationSpec() {
 
         "should get all saved movies" {
             // Given
-            val referenceDate = ZonedDateTime.of(2021, 6, 1, 9, 15, 0, 0, ZoneId.systemDefault())
             createNewMovie(
                 newMovieRequest(
                     120
@@ -57,14 +53,13 @@ class MovieApiTest : BaseIntegrationSpec() {
 
         "should return error" {
             // Given
-            val referenceDate = ZonedDateTime.of(2021, 5, 21, 11, 15, 0, 0, ZoneId.systemDefault())
             val avengersMovie = newMovieRequest(
                 420
             )
 
             // When
             try {
-                val response = createNewMovie(avengersMovie)
+                createNewMovie(avengersMovie)
             } catch (e: HttpClientResponseException) {
                 e.status shouldBe HttpStatus.UNPROCESSABLE_ENTITY
             }

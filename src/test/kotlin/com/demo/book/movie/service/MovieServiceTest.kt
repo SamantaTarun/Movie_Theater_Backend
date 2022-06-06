@@ -1,8 +1,8 @@
 package com.demo.book.movie.service
 
-import com.demo.book.movie.entity.Movie
 import com.demo.book.movie.repository.MovieRepository
-import com.demo.book.movie.request.MovieRequest
+import com.demo.book.utils.getDummyMovie
+import com.demo.book.utils.getDummyMovieRequest
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
@@ -69,16 +69,5 @@ class MovieServiceTest : StringSpec() {
                 )
             }
         }
-    }
-
-    private fun getDummyMovieRequest(duration: Int): MovieRequest {
-        return MovieRequest("test", duration)
-    }
-
-    private fun getDummyMovie(duration: Int): Movie {
-        return Movie(
-            1, "test",
-            duration
-        )
     }
 }

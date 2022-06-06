@@ -1,5 +1,6 @@
 package com.demo.book.api
 
+import auth.token.verifier.annotation.ClaimsAllowed
 import com.demo.book.movie.entity.Movie
 import com.demo.book.movie.request.MovieRequest
 import com.demo.book.movie.service.InvalidDurationException
@@ -22,6 +23,7 @@ class MovieApi(@Inject val movieService: MovieService) {
     }
 
     @Post("/movies")
+    @ClaimsAllowed(claimKey = "adminRights", claimValues = ["write"])
     fun saveMovie(@Body movieRequest: MovieRequest): MutableHttpResponse<Int> {
         return try {
             HttpResponse.ok(movieService.save(movieRequest).id)
