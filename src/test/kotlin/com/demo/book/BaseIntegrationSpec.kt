@@ -35,7 +35,12 @@ abstract class BaseIntegrationSpec : StringSpec() {
 
     protected fun clearData() {
         dataSource.connection.use { connection ->
-            connection.executeCommand("TRUNCATE movies RESTART IDENTITY CASCADE;")
+            connection.executeCommand(
+                """
+                TRUNCATE movies RESTART IDENTITY CASCADE;
+                TRUNCATE screens RESTART IDENTITY CASCADE;
+                """.trimIndent()
+            )
         }
     }
 

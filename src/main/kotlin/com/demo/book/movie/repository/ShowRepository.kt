@@ -1,10 +1,8 @@
 package com.demo.book.movie.repository
-
 import com.demo.book.movie.entity.Show
 import com.demo.book.movie.entity.Ticket
 import com.demo.book.movie.request.BookRequest
 import com.demo.book.movie.request.ShowRequest
-import liquibase.pro.packaged.it
 import movie.GetAllShowsParams
 import movie.GetAllShowsQuery
 import movie.GetNotBookedSeatsParams

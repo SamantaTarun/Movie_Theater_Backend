@@ -30,6 +30,7 @@ dependencies {
     runtimeOnly "ch.qos.logback:logback-classic"
     runtimeOnly "com.fasterxml.jackson.module:jackson-module-kotlin"
 
+    testImplementation 'io.projectreactor:reactor-core:3.4.18'
     testImplementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     testImplementation "io.mockk:mockk:1.10.2"
     testImplementation "org.testcontainers:testcontainers"
