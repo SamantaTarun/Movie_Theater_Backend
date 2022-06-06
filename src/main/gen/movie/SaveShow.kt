@@ -35,7 +35,8 @@ public class SaveShowRowMapper : RowMapper<SaveShowResult> {
         movieId = rs.getObject("movie_id") as kotlin.Int,
         price = rs.getObject("price") as java.math.BigDecimal,
         movielanguage = rs.getObject("movielanguage") as kotlin.String,
-        movietype = rs.getObject("movietype") as kotlin.String
+        movietype = rs.getObject("movietype") as kotlin.String,
+        seats = rs.getObject("seats") as kotlin.Int?
     )
 }
 
@@ -57,5 +58,6 @@ public data class SaveShowResult(
     public val movieId: Int,
     public val price: BigDecimal,
     public val movielanguage: String,
-    public val movietype: String
+    public val movietype: String,
+    public val seats: Int?
 )
